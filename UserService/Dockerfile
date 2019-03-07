@@ -3,3 +3,4 @@ WORKDIR /app
 COPY . /app
 RUN cd /app
 RUN npm install
+CMD npm start
