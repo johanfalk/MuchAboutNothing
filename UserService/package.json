@@ -1,0 +1,17 @@
+{
+	"name": "man_user_service",
+	"version": "1.0.0",
+	"description": "A service to handle thing like authorization and registration.",
+	"author": "Johan Falk",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/johanfalk/UserService.git"
+	},
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"express": "^4.16.1",
+		"mongodb": "^3.1.13"
+	}
+}
