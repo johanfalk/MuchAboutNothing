@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  user_service:
+    build:
+      context: ./UserService
+      dockerfile: Dockerfile
+    ports:
+      - 1337:1337
+    volumes:
+      - ./UserService:/app
+    networks:
+      - service_network
+
+  mongodb:
+    image: mongo:4
+    volumes:
+      - data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - service_network
+
+volumes:
+  data:
+networks:
+  service_network:
