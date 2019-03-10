@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bulma/css/bulma.css'
 import NavBar from './components/navbar';
+import DeckList from './components/decklist';
 
 class App extends Component {
   render() {
@@ -9,9 +10,7 @@ class App extends Component {
       <div className="App">
         <NavBar />
         <div>
-          <span>
-            This is the content that is professional
-          </span>
+          <DeckList/>
         </div>
       </div>
     );
