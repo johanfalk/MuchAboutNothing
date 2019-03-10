@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bulma/css/bulma.css'
-import NavBar from './components/navbar';
 import DeckList from './components/decklist';
 import Login from './components/login';
 import Modal from 'react-responsive-modal';
