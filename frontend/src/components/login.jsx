@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router'
+const Cookies = require('js-cookie');
 
 class Login extends Component {
     state = {
@@ -11,7 +12,7 @@ class Login extends Component {
 
     constructor() {
         super();
-        //TODO check if logged in
+        this.state.isLoggedIn = Cookies.get('token');
     }
 
     handleEmailChange = event => {
@@ -25,6 +26,7 @@ class Login extends Component {
     onSubmit = event => {
         console.log(this.state);
         event.preventDefault();
+        Cookies.set('token', 'fakeToken123', { expires: 1});
         this.setState({ isLoggedIn: true });
     }
 
