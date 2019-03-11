@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router'
+import * as constants from '../utils/constants';
 const Cookies = require('js-cookie');
+const axios = require('axios');
 
 class Login extends Component {
     state = {
@@ -24,8 +26,16 @@ class Login extends Component {
     };
 
     onSubmit = event => {
-        console.log(this.state);
         event.preventDefault();
+
+        /* TODO enable when userService is ready
+        axios.post(constants.BASE_URL + "/?/login", { email: this.state.email, password: this.state.password}).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.error(error);
+        });
+        */
+
         Cookies.set('token', 'fakeToken123', { expires: 1});
         this.setState({ isLoggedIn: true });
     }
