@@ -49,7 +49,7 @@ userSchema.pre('save', function(next) {
 
 const User = mongoose.model('User', userSchema);
 
-app.get('/authorize', isAuthenticated, (req, res) => {
+app.get('/token/validate', isAuthenticated, (req, res) => {
   const userQuery = User.findOne({
     _id: session.user
   });
