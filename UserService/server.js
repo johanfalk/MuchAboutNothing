@@ -49,15 +49,89 @@ userSchema.pre('save', function(next) {
 
 const User = mongoose.model('User', userSchema);
 
-app.get('/sessions', (req, res) => {
-  Session.find({}, (err, sessions) => {
-    err ? res.send(err) : res.send(sessions);
+app.get('/authorize', (req, res) => {
+  const sessionQuery = Session.findOne({ 
+    access_token: req.query.access_token 
+  });
+
+  sessionQuery.exec().then((session) => {
+    if (!session) return res.status(401).send('Unauthorized');
+
+    const userQuery = User.findOne({
+      _id: session.user
+    });
+
+    console.log({
+      _id: session.user
+    });
+
+    userQuery.exec().then((user) => {
+      console.log(user);
+      user ? res.status(200).send(user) : res.status(404).send('User not found');
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
+
+app.get('/', (req, res) => {
+  if (!isValidAccessToken(req.params.id, req.query.token)) {
+    return res.status(401).send('Unauthorized');
+  }
+
+  User.find({}).exec().then((users) => { 
+    res.send({ users });
+  });
+});
+
+app.get('/:id', (req, res) => {
+  if (!isValidAccessToken(req.params.id, req.query.token)) {
+    return res.status(401).send('Unauthorized');
+  }
+
+  User.findOne({ _id: req.params.id }).exec().then((user) => {
+    user ? res.status(200).send(user) : res.status(404).send('User not found');
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
+
+app.delete('/:id', (req, res) => {
+  if (!isValidAccessToken(req.params.id, req.query.token)) {
+    return res.status(401).send('Unauthorized');
+  }
+
+  User.deleteOne({ _id: req.params.id }).exec().then(() => {
+    res.status(200).send('Resource deleted successfully');
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+});
+
+app.post('/register', (req, res) => {
+  if (!isValidAccessToken(req.params.id, req.query.token)) {
+    return res.status(401).send('Unauthorized');
+  }
+
+  const user = new User(req.body);
+
+  user.save().then(() => {
+    res.status(201).send(user);
+  })
+  .catch((err) => {
+    res.status(400).send(err.message);
   });
 });
 
 app.post('/login', (req, res) => {
-  let credentials = { 
-    "email": req.body.email
+  const credentials = { 
+    email: req.body.email
   };
 
   User.findOne(credentials, (err, user) => {
@@ -68,13 +142,15 @@ app.post('/login', (req, res) => {
       if (err) return res.status(400).send(err.message);
       if (!isEqual) return res.status(401).send('Unauthorized');
 
-      let session = new Session({
+      const session = new Session({
         user: user._id,
         access_token: randToken.generate(128),
       });
 
       session.save().then((session) => {
-        res.status(200).send({ "access_token":  session.access_token})
+        res.status(200).send({ 
+          access_token:  session.access_token
+        });
       })
       .catch((err) => {
         res.status(500).send(err.message);
@@ -83,13 +159,9 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.post('/register', (req, res) => {
-  let user = new User(req.body);
-
-  user.save((err) => {
-    err ? res.status(400).send(err.message) : res.status(201).send({ user });
-  });
-});
+async function isValidAccessToken(id, access_token) {
+  return true;
+}
 
 app.listen(port, () => {
   console.log('App listening on port ' + port);
