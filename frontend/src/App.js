@@ -18,6 +18,7 @@ class App extends Component {
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
         <BrowserRouter>
           <div>
+            <Route path="/" component={Login} />
             <Route path="/login" component={Login} />
             <Route path="/decklist" component={DeckList} />
           </div>
