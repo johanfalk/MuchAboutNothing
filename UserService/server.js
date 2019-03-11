@@ -49,50 +49,26 @@ userSchema.pre('save', function(next) {
 
 const User = mongoose.model('User', userSchema);
 
-app.get('/authorize', (req, res) => {
-  const sessionQuery = Session.findOne({ 
-    access_token: req.query.access_token 
+app.get('/authorize', isAuthenticated, (req, res) => {
+  const userQuery = User.findOne({
+    _id: session.user
   });
 
-  sessionQuery.exec().then((session) => {
-    if (!session) return res.status(401).send('Unauthorized');
-
-    const userQuery = User.findOne({
-      _id: session.user
-    });
-
-    console.log({
-      _id: session.user
-    });
-
-    userQuery.exec().then((user) => {
-      console.log(user);
-      user ? res.status(200).send(user) : res.status(404).send('User not found');
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+  userQuery.exec().then((user) => {
+    user ? res.status(200).send(user) : res.status(404).send('User not found');
   })
   .catch((err) => {
     res.status(500).send(err);
   });
 });
 
-app.get('/', (req, res) => {
-  if (!isValidAccessToken(req.params.id, req.query.token)) {
-    return res.status(401).send('Unauthorized');
-  }
-
+app.get('/', isAuthenticated, (req, res) => {
   User.find({}).exec().then((users) => { 
     res.send({ users });
   });
 });
 
-app.get('/:id', (req, res) => {
-  if (!isValidAccessToken(req.params.id, req.query.token)) {
-    return res.status(401).send('Unauthorized');
-  }
-
+app.get('/:id', isAuthenticated, (req, res) => {
   User.findOne({ _id: req.params.id }).exec().then((user) => {
     user ? res.status(200).send(user) : res.status(404).send('User not found');
   })
@@ -101,11 +77,7 @@ app.get('/:id', (req, res) => {
   });
 });
 
-app.delete('/:id', (req, res) => {
-  if (!isValidAccessToken(req.params.id, req.query.token)) {
-    return res.status(401).send('Unauthorized');
-  }
-
+app.delete('/:id', isAuthenticated, (req, res) => {
   User.deleteOne({ _id: req.params.id }).exec().then(() => {
     res.status(200).send('Resource deleted successfully');
   })
@@ -115,10 +87,6 @@ app.delete('/:id', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  if (!isValidAccessToken(req.params.id, req.query.token)) {
-    return res.status(401).send('Unauthorized');
-  }
-
   const user = new User(req.body);
 
   user.save().then(() => {
@@ -159,8 +127,17 @@ app.post('/login', (req, res) => {
   });
 });
 
-async function isValidAccessToken(id, access_token) {
-  return true;
+function isAuthenticated(req, res, next) {
+  const data = {
+    access_token: req.query.access_token,
+  };
+
+  Session.findOne(data).exec().then((session) => {
+    session ? next() : res.status(401).send('Unauthorized');
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
 }
 
 app.listen(port, () => {
