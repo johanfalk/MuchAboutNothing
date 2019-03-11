@@ -23,7 +23,7 @@ const sessionSchema = new mongoose.Schema({
 });
 
 sessionSchema.pre('save', function(next) {
-  Session.deleteMany({ "user": this.user }).exec();
+  Session.deleteMany({ "user": this.user }).exec().then(() => { next() });
 });
 
 const Session = mongoose.model('Session', sessionSchema);
@@ -66,31 +66,22 @@ app.post('/login', (req, res) => {
 
     bcrypt.compare(req.body.password, user.password, function(err, isEqual) {
       if (err) return res.status(400).send(err.message);
+      if (!isEqual) return res.status(401).send('Unauthorized');
 
-      if (isEqual) {
-        let session = new Session({
-          user: user._id,
-          access_token: randToken.generate(128),
-        });
+      let session = new Session({
+        user: user._id,
+        access_token: randToken.generate(128),
+      });
 
-        session.save((err) => {
-          if (err) return res.status(500).send(err.message);
-
-          getAccessToken(user).then((session) => {
-            return res.status(200).send({ "access_token":  session.access_token});
-          });
-        });
-      }
-      else {
-        return res.status(401).send('Unauthorized');
-      }
+      session.save().then((session) => {
+        res.status(200).send({ "access_token":  session.access_token})
+      })
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
     });
   });
 });
-
-async function getAccessToken(user) {
-  return await Session.findOne({ "user": user._id });
-}
 
 app.post('/register', (req, res) => {
   let user = new User(req.body);
