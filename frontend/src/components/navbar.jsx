@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect, Link } from 'react-router-dom'
 import Cookies from 'js-cookie';
 
 class NavBar extends Component {
     state = {
-        redirectToLogin: false
+        redirectToLogin: false,
+        redirectToInventory: false,
+        redirectToDeckList: false
     };
 
     constructor() {
@@ -14,15 +16,45 @@ class NavBar extends Component {
         }
     }
 
+    compo
+
+    componentWillMount() {
+        console.log('receive');
+        this.resetState();
+    }
+
     onLogoutClick = () => {
         Cookies.remove('token');
         this.setState({ redirectToLogin: true });
     }
 
-    render() {
+    onInventoryClick = () => {
+        this.setState({ redirectToInventory: true });
+    }
+
+    onDecklistHomeClick = () => {
+        this.setState({ redirectToDeckList: true });
+    }
+
+    resetState = () => {
+        this.setState({ redirectToDeckList: false, redirectToInventory: false, redirectToLogin: false });
+    }
+
+    getRedirect = () => {
         if (this.state.redirectToLogin) {
-            return <Redirect to="/login" />
+            return "/login";
         }
+
+        return undefined;
+    }
+
+    render() {
+        const redirectTo = this.getRedirect();
+
+        if (redirectTo) {
+            return (<Redirect to={redirectTo} />);
+        }
+
 
         if (!Cookies.get('token')) {
             return (<div></div>);
@@ -34,15 +66,18 @@ class NavBar extends Component {
                     <a className="navbar-item" href="/">
                         <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="" />
                     </a>
-
                     <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" href="/">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                     </a>
                 </div>
-
                 <div id="navbarBasicExample" className="navbar-menu">
+                    <div className="navbar-start">
+                        <Link className="navbar-item" to="/">Home</Link>
+                        <Link className="navbar-item" to="/inventory">Inventory</Link>
+                        <Link className="navbar-item" to="/decklist">Decklist</Link>
+                    </div>
                     <div className="navbar-end">
                         <div className="navbar-item">
                             <div className="buttons">
@@ -51,7 +86,7 @@ class NavBar extends Component {
                         </div>
                     </div>
                 </div>
-            </nav>
+            </nav >
         );
     }
 }

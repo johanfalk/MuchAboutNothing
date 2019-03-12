@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router-dom'
 import * as constants from '../utils/constants';
 const Cookies = require('js-cookie');
 const axios = require('axios');

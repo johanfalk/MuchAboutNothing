@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 const Cookies = require('js-cookie');
 
 class DeckList extends Component {
