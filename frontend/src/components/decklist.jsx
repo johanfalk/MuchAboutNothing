@@ -3,21 +3,16 @@ import { Redirect } from 'react-router';
 const Cookies = require('js-cookie');
 
 class DeckList extends Component {
-    state = { 
-        isLoggedIn: false
-    }
+    state = {
 
-    constructor() {
-        super();
-        this.state.isLoggedIn = Cookies.get('token');
-    }
+    };
 
-    render() { 
-        if (!this.state.isLoggedIn) {
-            return <Redirect to="/login"/>
+    render() {
+        if (!Cookies.get('token')) {
+            return <Redirect to="/login" />
         }
 
-        return ( 
+        return (
             <div>
                 <ul>
                     <li>Deck 1</li>
@@ -26,8 +21,8 @@ class DeckList extends Component {
                 </ul>
                 <button className="button">New Deck!</button>
             </div>
-         );
+        );
     }
 }
- 
+
 export default DeckList;

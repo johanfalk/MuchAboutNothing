@@ -3,8 +3,8 @@ import './App.css';
 import 'bulma/css/bulma.css'
 import DeckList from './components/decklist';
 import Login from './components/login';
-import Modal from 'react-responsive-modal';
 import { BrowserRouter, Route } from 'react-router-dom'
+import NavBar from './components/navbar';
 
 class App extends Component {
 
@@ -18,9 +18,12 @@ class App extends Component {
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
         <BrowserRouter>
           <div>
-            <Route path="/" component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/decklist" component={DeckList} />
+            <NavBar />
+            <div>
+              <Route exact path="" component={Login} />
+              <Route path="/login" component={Login} />
+              <Route path="/decklist" component={DeckList} />
+            </div>
           </div>
         </BrowserRouter>
       </div>

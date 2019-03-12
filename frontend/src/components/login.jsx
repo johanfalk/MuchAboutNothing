@@ -7,15 +7,9 @@ const axios = require('axios');
 class Login extends Component {
     state = {
         isLoading: false,
-        isLoggedIn: false,
         email: '',
         password: ''
     };
-
-    constructor() {
-        super();
-        this.state.isLoggedIn = Cookies.get('token');
-    }
 
     handleEmailChange = event => {
         this.setState({ email: event.target.value });
@@ -27,7 +21,7 @@ class Login extends Component {
 
     onSubmit = event => {
         event.preventDefault();
-
+        this.setState({ isLoading: true });
         /* TODO enable when userService is ready
         axios.post(constants.BASE_URL + "/?/login", { email: this.state.email, password: this.state.password}).then((response) => {
             console.log(response);
@@ -36,12 +30,12 @@ class Login extends Component {
         });
         */
 
-        Cookies.set('token', 'fakeToken123', { expires: 1});
+        Cookies.set('token', 'fakeToken123', { expires: 1 });
         this.setState({ isLoggedIn: true });
     }
 
     render() {
-        if (this.state.isLoggedIn) {
+        if (Cookies.get('token')) {
             return <Redirect to="/decklist" />
         }
 
