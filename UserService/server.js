@@ -1,31 +1,13 @@
-const mongodb = require('mongodb').MongoClient;
-const app = require('express')()
-const port = 1337
+const mongoose = require('mongoose');
+const express = require('express');
+const router = require('./app/router');
+const server = express();
+const port = 1337;
 
-app.get('/', (req, res) => {
-    mongodb.connect('mongodb://mongodb:27017', (err, db) => {
-        var dbo = db.db('prutt_db');
- /*       dbo.collection('prutt').insertOne({lukt: 'Stinky', power: 123}, function (err, v) {
-          if (err) {
-            throw err;
-          }
+mongoose.connect('mongodb://mongodb:27017/users');
 
-          db.close();
-          res.send('INSERTED PRUTT');
-        });
-*/
-        dbo.collection('prutt').find({}).toArray((err, a) => {
-          if (err) {
-            throw err;
-          }
+server.use(router);
 
-
-
-          res.send(a);
-        });
-    });
-});
-
-app.listen(port, () => {
-  console.log('App listening on port ' + port);
+server.listen(port, () => {
+  console.log('server listening on port ' + port);
 });
