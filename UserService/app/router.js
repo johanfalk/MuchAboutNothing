@@ -22,7 +22,8 @@ Router.get(
   controller.getUser
 );
 
-Router.delete('/:id',
+Router.delete(
+  '/:id',
   controller.hasValidAccessToken, 
   controller.deleteUser
 );
