@@ -16,28 +16,9 @@ class NavBar extends Component {
         }
     }
 
-    compo
-
-    componentWillMount() {
-        console.log('receive');
-        this.resetState();
-    }
-
     onLogoutClick = () => {
         Cookies.remove('token');
         this.setState({ redirectToLogin: true });
-    }
-
-    onInventoryClick = () => {
-        this.setState({ redirectToInventory: true });
-    }
-
-    onDecklistHomeClick = () => {
-        this.setState({ redirectToDeckList: true });
-    }
-
-    resetState = () => {
-        this.setState({ redirectToDeckList: false, redirectToInventory: false, redirectToLogin: false });
     }
 
     getRedirect = () => {

@@ -5,6 +5,7 @@ import DeckList from './components/decklist';
 import Login from './components/login';
 import { BrowserRouter, Route } from 'react-router-dom'
 import NavBar from './components/navbar';
+import Inventory from './components/inventory';
 
 class App extends Component {
 
@@ -21,6 +22,7 @@ class App extends Component {
             <NavBar />
             <div>
               <Route exact path="" component={Login} />
+              <Route path="/inventory" component={Inventory} />
               <Route path="/login" component={Login} />
               <Route path="/decklist" component={DeckList} />
             </div>
