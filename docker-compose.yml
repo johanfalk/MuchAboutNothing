@@ -14,6 +14,19 @@ services:
     depends_on:
       - "mongodb"
 
+  deck_service:
+    build:
+      context: ./DeckService
+      dockerfile: Dockerfile
+    ports:
+      - 1338:80
+    volumes:
+      - ./DeckService:/app
+    networks:
+      - service_network
+    depends_on:
+      - "mongodb"
+
   frontend_service:
     build:
       context: ./Frontend

@@ -9,7 +9,7 @@ exports.createDeck = async (ownerId) => {
 }
 
 exports.updateDeck = async (deck) => {
-    return await Deck.findByIdAndUpdate(deck._id, deck, { upsert: true, new: true }).exec();
+    return await Deck.findByIdAndUpdate(deck._id, deck).exec();
 }
 
 exports.deleteDeck = async (deck) => {
@@ -22,4 +22,8 @@ exports.getDecksByUser = async (userId) => {
 
 exports.getDeck = async (id) => {
     return await Deck.findById(id).exec();
+}
+
+exports.getAllDecks = async () => {
+    return Deck.find({}).exec();
 }

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
     ownerId: {
-        type: mongoose.Schema.Types.ObjectId
+        type: String
     },
     name: {
         type: String,
