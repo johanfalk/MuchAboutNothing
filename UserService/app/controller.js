@@ -11,12 +11,12 @@ exports.getUser = async (req, res) => {
       res.status(200).send(user);
     }
     else {
-      res.status(404).send('User not found');
+      res.status(404).send({ error: 'User not found' });
     }
   }
   catch (error) {
     errorHandler.handle(error);
-    res.status(500).send('Something went wrong');
+    res.status(500).send({ error: 'Something went wrong' });
   }
 }
 
@@ -28,12 +28,12 @@ exports.getAllUsers = async (req, res) => {
       res.status(200).send(users);
     }
     else {
-      res.status(404).send('Users not found');
+      res.status(404).send({ error: 'Users not found' });
     }
   }
   catch (error) {
     errorHandler.handle(error);
-    res.status(500).send('Something went wrong');
+    res.status(500).send({ error: 'Something went wrong' });
   }
 }
 
@@ -45,23 +45,23 @@ exports.getUserByAccessToken = async (req, res) => {
       res.status(200).send(user);
     }
     else {
-      res.status(404).send('User not found');
+      res.status(404).send({ error: 'User not found' });
     }
   }
   catch (error) {
     errorHandler.handle(error);
-    res.status(500).send('Something went wrong');
+    res.status(500).send({ error: 'Something went wrong' });
   }
 }
 
 exports.deleteUser = async (req, res) => {
   try {
     await queries.deleteUser(req.params.id);
-    res.status(200).send('Resource deleted successfully');
+    res.status(200).send({ error: 'Resource deleted successfully' });
   }
   catch (error) {
     errorHandler.handle(error);
-    res.status(500).send('Something went wrong');
+    res.status(500).send({ error: 'Something went wrong' });
   }
 }
 
@@ -70,17 +70,17 @@ exports.loginUser = async (req, res) => {
     const user = await queries.getUserByEmail(req.body.email);
 
     if (!user) {
-      return res.status(404).send('User not found');
+      return res.status(404).send({ error: 'User not found' });
     }
 
     const isEqualPassword = await new Promise((resolve, reject) => {
-      bcrypt.compare(req.body.password, user.password, function(error, isEqualPassword) {
+      bcrypt.compare(req.body.password, user.password, function (error, isEqualPassword) {
         error ? reject(error) : resolve(isEqualPassword);
       });
     });
 
     if (!isEqualPassword) {
-      return res.status(401).send('Unauthorized');
+      return res.status(401).send({ error: 'Unauthorized' });
     }
 
     const session = await queries.createSession({
@@ -97,7 +97,7 @@ exports.loginUser = async (req, res) => {
   }
   catch (error) {
     errorHandler.handle(error);
-    res.status(500).send('Something went wrong');
+    res.status(500).send({ error: 'Something went wrong' });
   }
 }
 
@@ -108,7 +108,7 @@ exports.registerUser = async (req, res) => {
   }
   catch (error) {
     errorHandler.handle(error);
-    res.status(500).send('Something went wrong');
+    res.status(500).send({ error: 'Something went wrong' });
   }
 }
 
@@ -120,11 +120,11 @@ exports.hasValidAccessToken = async (req, res, next) => {
       next();
     }
     else {
-      res.status(401).send('Unauthorized');
+      res.status(401).send({ error: 'Unauthorized' });
     }
   }
   catch (error) {
     errorHandler.handle(error);
-    res.status(500).send('Something went wrong');
+    res.status(500).send({ error: 'Something went wrong' });
   }
 }
