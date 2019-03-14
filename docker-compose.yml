@@ -11,6 +11,8 @@ services:
       - ./UserService:/app
     networks:
       - service_network
+    depends_on:
+      - "mongodb"
 
   frontend_service:
     build:
@@ -21,7 +23,7 @@ services:
     volumes:
       - ./Frontend:/app
     networks:
-      - service_network      
+      - service_network
 
   mongodb:
     image: mongo:4
