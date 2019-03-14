@@ -12,6 +12,17 @@ services:
     networks:
       - service_network
 
+  frontend_service:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./Frontend:/app
+    networks:
+      - service_network      
+
   mongodb:
     image: mongo:4
     volumes:
