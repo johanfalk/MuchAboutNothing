@@ -29,4 +29,9 @@ Router.get(
     controller.getUsersDeck
 );
 
+Router.get(
+    '/decks/cards/:ownerId',
+    controller.getUsedCards
+);
+
 module.exports = Router;
