@@ -29,10 +29,10 @@ exports.getAllDecks = async () => {
 }
 
 exports.findUsedCards = async (userId) => {
-    const decks = await getDecksByUser(userId);
+    const decks = await Deck.find({ ownerId: userId }).exec();
     let cardAndCount = [];
 
-    decks.array.forEach(cardId => {
+    decks.forEach(cardId => {
         cardAndCount[cardId] = cardAndCount[cardId] || 0;
         cardAndCount[cardId]++;
     });

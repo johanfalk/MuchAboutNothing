@@ -1,8 +1,8 @@
 {
-	"name": "man_user_service",
+	"name": "man_gateway_service",
 	"version": "1.0.0",
-	"description": "A service to handle thing like authorization and registration.",
-	"author": "Johan Falk",
+	"description": "Door to nothingness",
+	"author": "Philip Persson",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/johanfalk/UserService.git"
@@ -11,12 +11,7 @@
 		"start": "nodemon server.js"
 	},
 	"dependencies": {
-		"bcrypt-nodejs": "0.0.3",
-		"email-validator": "^2.0.4",
 		"express": "^4.16.1",
-		"mongodb": "^3.1.13",
-		"mongoose": "^5.4.18",
-		"nodemon": "^1.18.10",
-		"rand-token": "^0.4.0"
+		"nodemon": "^1.18.10"
 	}
 }

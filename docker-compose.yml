@@ -19,7 +19,7 @@ services:
       context: ./DeckService
       dockerfile: Dockerfile
     ports:
-      - 1338:80
+      - "1338:80"
     volumes:
       - ./DeckService:/app
     networks:
@@ -35,6 +35,17 @@ services:
       - 3000:3000
     volumes:
       - ./Frontend:/app
+    networks:
+      - service_network
+
+  gateway_service:
+    build:
+      context: ./Gateway
+      dockerfile: Dockerfile
+    ports:
+      - 1336:1336
+    volumes:
+      - ./Gateway:/app
     networks:
       - service_network
 
