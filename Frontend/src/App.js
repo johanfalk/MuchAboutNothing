@@ -5,12 +5,17 @@ import DeckList from './components/decklist';
 import Login from './components/login';
 import { BrowserRouter, Route } from 'react-router-dom'
 import Inventory from './components/inventory';
+const loginService = require('./services/loginService');
 
 class App extends Component {
 
   state = {
 
   };
+
+  async componentWillMount() {
+    await loginService.verifyToken();
+  }
 
   render() {
     return (

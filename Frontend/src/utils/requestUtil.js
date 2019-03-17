@@ -11,17 +11,17 @@ export function getConfig() {
 }
 
 export function get(url) {
-    return axios.get(constants.BASE_URL + url, this.getConfig()).catch((error) => console.error(error));
+    return axios.get(constants.BASE_URL + url, this.getConfig());
 }
 
 export function post(url, data) {
-    return axios.post(constants.BASE_URL + url, data, this.getConfig()).catch((error) => console.error(error));
+    return axios.post(constants.BASE_URL + url, data, this.getConfig());
 }
 
 export function put(url, data) {
-    return axios.put(constants.BASE_URL + url, data, this.getConfig()).catch((error) => console.error(error));
+    return axios.put(constants.BASE_URL + url, data, this.getConfig());
 }
 
 export function deleteHttp(url) {
-    return axios.delete(constants.BASE_URL + url, this.getConfig()).catch((error) => console.error(error));
+    return axios.delete(constants.BASE_URL + url, this.getConfig());
 }

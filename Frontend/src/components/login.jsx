@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import * as constants from '../utils/constants';
 const Cookies = require('js-cookie');
+const loginService = require('../services/loginService');
 const axios = require('axios');
 
 class Login extends Component {
     state = {
-        isLoading: false,
         email: '',
         password: ''
     };
@@ -19,22 +19,23 @@ class Login extends Component {
         this.setState({ password: event.target.value });
     };
 
-    onLoginClick = () => {
-        axios.post(constants.USER_SERVICE_URL + '/login', { email: this.state.email, password: this.state.password }).then((response) => {
-            Cookies.set('token', response.data.access_token, { expires: 31 });
-            Cookies.set('userId', response.data.user, { expires: 31 });
-            this.setState({ isLoggedIn: true });
-        }).catch((error) => {
+    onLoginClick = async () => {
+        try {
+            await loginService.login(this.state.email, this.state.password);
+            this.setState({});
+        } catch (error) {
             console.error(error);
-        });
+        }
     }
 
-    onRegisterClick = () => {
-        axios.post(constants.USER_SERVICE_URL + '/register', { email: this.state.email, password: this.state.password }).then((response) => {
-            console.log(response);
-        }).catch((error) => {
+    onRegisterClick = async () => {
+        try {
+            await loginService.register(this.state.email, this.state.password);
+            await loginService.login(this.state.email, this.state.password);
+            this.setState({});
+        } catch (error) {
             console.error(error);
-        });
+        }
     }
 
     render() {
