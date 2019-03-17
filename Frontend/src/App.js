@@ -13,14 +13,11 @@ class App extends Component {
 
   };
 
-  async componentWillMount() {
-    await loginService.verifyToken();
-  }
-
   render() {
     return (
       <div className="App">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+        <link href="//cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
         <BrowserRouter>
           <div>
             <div>
