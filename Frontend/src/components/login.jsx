@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
-import * as constants from '../utils/constants';
 const Cookies = require('js-cookie');
 const loginService = require('../services/loginService');
-const axios = require('axios');
 
 class Login extends Component {
     state = {
