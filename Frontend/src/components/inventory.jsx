@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NavBar from './navbar';
 
 class Inventory extends Component {
     state = {
@@ -58,6 +59,7 @@ class Inventory extends Component {
 
         return (
             <div>
+                <NavBar />
                 <span>Inventory</span>
                 <input className="input" type="text" placeholder="Search..." ref={this.state.search} onChange={this.onSearchUpdated} />
                 <table className="table is-fullwidth is-hoverable">

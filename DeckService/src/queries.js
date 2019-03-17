@@ -39,3 +39,7 @@ exports.findUsedCards = async (userId) => {
 
     return cardAndCount;
 }
+
+exports.deleteDeck = async (id) => {
+    return await Deck.findByIdAndDelete(id).exec();
+}

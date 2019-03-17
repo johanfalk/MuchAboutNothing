@@ -34,4 +34,9 @@ Router.get(
     controller.getUsedCards
 );
 
+Router.delete(
+    '/decks/:id',
+    controller.deleteDeck
+);
+
 module.exports = Router;

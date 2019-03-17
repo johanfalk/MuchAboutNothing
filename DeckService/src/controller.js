@@ -59,3 +59,13 @@ exports.getUsedCards = async (req, res) => {
         res.status(500).send({ message: 'Failed to fetch all used cards for user: ' + error });
     }
 }
+
+exports.deleteDeck = async (req, res) => {
+    try {
+        const cards = await queries.deleteDeck(req.params.id);
+        res.status(200).send(cards);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: 'Failed to delete deck: ' + error });
+    }
+}

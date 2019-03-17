@@ -41,7 +41,7 @@ exports.getUserByAccessToken = async (req, res) => {
   try {
     const user = await queries.getUserByAccessToken(req.query.access_token);
 
-    if (users) {
+    if (user) {
       res.status(200).send(user);
     }
     else {

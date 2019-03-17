@@ -20,8 +20,9 @@ class Login extends Component {
     };
 
     onLoginClick = () => {
-        axios.post(constants.BASE_URL + "UserService/login", { email: this.state.email, password: this.state.password }).then((response) => {
+        axios.post(constants.USER_SERVICE_URL + '/login', { email: this.state.email, password: this.state.password }).then((response) => {
             Cookies.set('token', response.data.access_token, { expires: 31 });
+            Cookies.set('userId', response.data.user, { expires: 31 });
             this.setState({ isLoggedIn: true });
         }).catch((error) => {
             console.error(error);
@@ -29,7 +30,7 @@ class Login extends Component {
     }
 
     onRegisterClick = () => {
-        axios.post(constants.BASE_URL + "UserService/register", { email: this.state.email, password: this.state.password }).then((response) => {
+        axios.post(constants.USER_SERVICE_URL + '/register', { email: this.state.email, password: this.state.password }).then((response) => {
             console.log(response);
         }).catch((error) => {
             console.error(error);

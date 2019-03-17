@@ -16,7 +16,7 @@ exports.getUserByEmail = async (email) => {
 
 exports.getUserByAccessToken = async (token) => {
   try {
-    const session = await getSessionByAccessToken(token);
+    const session = await exports.getSessionByAccessToken(token);
 
     if (session) {
       return User.findOne({ _id: session.user }).exec();
