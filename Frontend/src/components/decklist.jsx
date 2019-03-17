@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import NavBar from './navbar';
 import * as constants from '../utils/constants';
+import { getConfig } from '../utils/requestUtil';
 const axios = require('axios');
 const Cookies = require('js-cookie');
+require('../utils/requestUtil');
 
 class DeckList extends Component {
     state = {
@@ -12,11 +14,7 @@ class DeckList extends Component {
 
     constructor() {
         super();
-        axios.get(constants.DECK_SERVICE_URL + '/decks/' + Cookies.get('userId'), {
-            headers: {
-                auth_token: Cookies.get('token')
-            }
-        }).then((response) => {
+        axios.get(constants.DECK_SERVICE_URL + '/decks/' + Cookies.get('userId'), getConfig()).then((response) => {
             this.setState({ decks: response.data });
         }).catch((error) => {
             console.error(error);
@@ -24,11 +22,7 @@ class DeckList extends Component {
     };
 
     onNewDeckClick = () => {
-        axios.put(constants.DECK_SERVICE_URL + '/' + Cookies.get('userId'), {}, {
-            headers: {
-                auth_token: Cookies.get('token')
-            }
-        }).then((response) => {
+        axios.put(constants.DECK_SERVICE_URL + '/' + Cookies.get('userId'), {}, getConfig()).then((response) => {
             let decks = this.state.decks;
             decks.push(response.data);
             this.setState({ decks: decks });
@@ -38,11 +32,7 @@ class DeckList extends Component {
     };
 
     onDeleteClick = (id) => {
-        axios.delete(constants.DECK_SERVICE_URL + '/decks/' + id, {
-            headers: {
-                auth_token: Cookies.get('token')
-            }
-        }).then((response) => {
+        axios.delete(constants.DECK_SERVICE_URL + '/decks/' + id, getConfig()).then((response) => {
             const decks = this.state.decks.filter((deck) => {
                 return deck._id !== id;
             });
