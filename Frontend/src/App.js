@@ -3,9 +3,9 @@ import './App.css';
 import 'bulma/css/bulma.css'
 import DeckList from './components/decklist';
 import Login from './components/login';
+import DeckBuilder from './components/deckbuilder';
 import { BrowserRouter, Route } from 'react-router-dom'
 import Inventory from './components/inventory';
-const loginService = require('./services/loginService');
 
 class App extends Component {
 
@@ -25,6 +25,7 @@ class App extends Component {
               <Route path="/inventory" component={Inventory} />
               <Route path="/login" component={Login} />
               <Route path="/decklist" component={DeckList} />
+              <Route path="/deckbuilder" component={DeckBuilder} />
             </div>
           </div>
         </BrowserRouter>

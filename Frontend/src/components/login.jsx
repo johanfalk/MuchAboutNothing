@@ -24,7 +24,7 @@ class Login extends Component {
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
     onRegisterClick = async () => {
         try {
@@ -34,7 +34,7 @@ class Login extends Component {
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
     render() {
         if (Cookies.get('token')) {

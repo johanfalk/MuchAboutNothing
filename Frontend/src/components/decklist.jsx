@@ -46,7 +46,7 @@ class DeckList extends Component {
                     </div>
                 </div>
             </li>
-        })
+        });
     };
 
     render() {
