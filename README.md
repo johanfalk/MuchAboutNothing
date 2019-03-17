@@ -16,6 +16,7 @@ docker run --rm -it --network <NETWORK> --link <CONTAINER>:<MONGO_ALIAS> -v /bac
 * Fix docker-compose.yml for non dev
 * Implement server access.
 * Configure environment for development, production etc.
+* Currently we need CORS-addon in browser for dev
 
 ### User service:
 * Filter the user data returned when e.g, authorizing.
