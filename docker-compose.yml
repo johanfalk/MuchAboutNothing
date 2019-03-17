@@ -6,7 +6,7 @@ services:
       context: ./UserService
       dockerfile: Dockerfile
     ports:
-      - 1337:1337
+      - 1337:80
     volumes:
       - ./UserService:/app
     networks:
@@ -43,7 +43,7 @@ services:
       context: ./Gateway
       dockerfile: Dockerfile
     ports:
-      - 1336:1336
+      - 1336:80
     volumes:
       - ./Gateway:/app
     networks:

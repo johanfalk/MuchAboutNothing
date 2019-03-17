@@ -114,7 +114,7 @@ exports.registerUser = async (req, res) => {
 
 exports.hasValidAccessToken = async (req, res, next) => {
   try {
-    const session = await queries.getSessionByAccessToken(req.query.access_token);
+    const session = await queries.getSessionByAccessToken(req.headers['auth_token']);
 
     if (session) {
       next();

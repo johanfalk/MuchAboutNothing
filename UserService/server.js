@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = require('./app/router');
 const server = express();
-const port = 1337;
+const port = 80;
 
 mongoose.connect('mongodb://mongodb:27017/users');
 

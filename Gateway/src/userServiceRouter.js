@@ -11,8 +11,7 @@ Router.get('/UserService/*', (req, res) => {
     axios.get(newUrl).then((response) => {
         res.status(response.status).send(response.data);
     }).catch((error) => {
-        console.log(error);
-        res.status(500).send({ message: 'Unexpected error in API gateway' });
+        res.status(error.response.status).send(error.response.data);
     });
 });
 
@@ -23,8 +22,7 @@ Router.post('/UserService/*', (req, res) => {
     axios.post(newUrl, req.body).then((response) => {
         res.status(response.status).send(response.data);
     }).catch((error) => {
-        console.log(error);
-        res.status(500).send({ message: 'Unexpected error in API gateway' });
+        res.status(error.response.status).send(error.response.data);
     });
 });
 
@@ -35,8 +33,7 @@ Router.put('/UserService/*', (req, res) => {
     axios.put(newUrl, req.body).then((response) => {
         res.status(response.status).send(response.data);
     }).catch((error) => {
-        console.log(error);
-        res.status(500).send({ message: 'Unexpected error in API gateway' });
+        res.status(error.response.status).send(error.response.data);
     });
 });
 
@@ -47,8 +44,7 @@ Router.delete('/UserService/*', (req, res) => {
     axios.delete(newUrl).then((response) => {
         res.status(response.status).send(response.data);
     }).catch((error) => {
-        console.log(error);
-        res.status(500).send({ message: 'Unexpected error in API gateway' });
+        res.status(error.response.status).send(error.response.data);
     });
 });
 

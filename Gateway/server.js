@@ -1,8 +1,8 @@
 const express = require('express');
+const server = express();
 const deckServiceRouter = require('./src/deckServiceRouter');
 const userServiceRouter = require('./src/userServiceRouter');
-const server = express();
-const port = 1336;
+const port = 80;
 
 server.use(deckServiceRouter);
 server.use(userServiceRouter);
